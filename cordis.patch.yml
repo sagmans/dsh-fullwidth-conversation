@@ -1,0 +1,3 @@
+- insert:
+    - id: fullwidth-conversation
+      name: '@local/fullwidth-conversation'
