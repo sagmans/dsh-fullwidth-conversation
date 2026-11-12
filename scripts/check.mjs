@@ -128,7 +128,7 @@ function checkManifestShape(manifest) {
   }
 }
 
-/** One path policy is shared by every distribution entry. */
+/** Reject traversal before matching so distribution entries cannot escape the package. */
 function distributionMatches(pattern, files) {
   if (
     typeof pattern !== 'string' || pattern.startsWith('/') || pattern.includes('..') || !/^[\w./*-]+$/u.test(pattern)
@@ -179,7 +179,7 @@ function checkExports(manifest, files, listed) {
   }
 }
 
-/** Loader and locale shape checks catch incompatible package metadata without runtime packages. */
+/** Shared package identity and locale keys prevent activation and translation drift. */
 function checkLoaderMetadata(manifest, files, listed) {
   if (manifest.dsh?.bundle?.patch !== './cordis.patch.yml' || manifest.dsh?.client?.platform !== 'web') {
     throw new CheckError('manifest: missing bundle/client contract');
@@ -206,7 +206,7 @@ function checkManifest(files) {
   return manifest;
 }
 
-/** Smoke the real module registration, not private functions or mocked application state. */
+/** Registration catches loader drift without application dependencies, but cannot prove DOM effects. */
 function smoke(manifest) {
   let registrations = 0;
   const loader = {
