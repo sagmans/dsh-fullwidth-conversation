@@ -29,8 +29,10 @@ Generic checks run before these extensions.
 ## Native gate
 
 The [native checker](../scripts/check.mjs) owns command modes, tool arguments,
-format rules, and validation bounds. It uses local Node.js, Deno, and shfmt.
-It does not install packages or rewrite source.
+format rules, and validation bounds. It uses Node.js, Deno, shfmt, and
+shellcheck at the versions pinned in [mise.toml](../mise.toml), and fails closed
+when a required tool is missing or below its floor. It does not install packages
+or rewrite source.
 
 The full gate covers syntax, static lint, source hygiene, JSON shape, locale-key
 parity, privacy patterns, distribution, and module registration.
